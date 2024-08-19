@@ -37,8 +37,8 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
     const room = this.roomsService.getRoom(player.roomId);
     this.roomsService.removePlayer(player);
-    if(room.totalPlayers===0){
-      this.roomsService.deleteRoom(room.getId())
+    if (room.totalPlayers === 0) {
+      this.roomsService.deleteRoom(room.getId());
     }
     this.server
       .to(player.roomId)
@@ -63,6 +63,22 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayDisconnect {
       });
       this.server.to(jrd.id).emit('gameStarted', room);
     }
+  }
+
+  @SubscribeMessage('playerLeaving')
+  playerLeaving(@ConnectedSocket() client: Socket) {
+    const player = this.roomsService.getPlayer(client.id);
+    if (!player) {
+      return;
+    }
+    const room = this.roomsService.getRoom(player.roomId);
+    this.roomsService.removePlayer(player);
+    if (room.totalPlayers === 0) {
+      this.roomsService.deleteRoom(room.getId());
+    }
+    this.server
+      .to(player.roomId)
+      .emit('playerLeft', { room, playerId: client.id });
   }
 
   @SubscribeMessage('startGame')
@@ -93,7 +109,6 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const room = this.roomsService.makeMove(this.server, data);
     this.roomsService.getRoom(data.roomId);
     client.broadcast.emit('madeMove', room);
-
     this.roomsService.checkForDrawOrWinner(this.server, data, room);
   }
 }
