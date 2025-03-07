@@ -11,7 +11,14 @@ A real-time multiplayer Tic-Tac-Toe game server built with [NestJS](https://nest
 ## 🛠️ Tech Stack  
 - **NestJS** - Backend framework  
 - **Socket.IO** - WebSocket communication  
-- **TypeScript** - For Typesafety 
+- **TypeScript** - For Typesafety
+
+## 📌 Tasks  
+- [x] Implement game logic
+- [ ] Implement Session based room management
+- [ ] Incorporate Redis game state management
+- [ ] Game Reconnection
+---
 
 ## 📦 Installation  
 
