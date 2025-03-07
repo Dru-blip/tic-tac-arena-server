@@ -15,8 +15,7 @@ A real-time multiplayer Tic-Tac-Toe game server built with [NestJS](https://nest
 
 ## 📌 Tasks  
 - [x] Implement game logic
-- [ ] Implement Session based room management
-- [ ] Incorporate Redis game state management
+- [ ] Implement Session based room management using Redis
 - [ ] Game Reconnection
 ---
 
